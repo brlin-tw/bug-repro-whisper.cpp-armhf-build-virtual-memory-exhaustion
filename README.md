@@ -3,7 +3,7 @@ Copyright 2026 林博仁(Buo-ren Lin) <buo.ren.lin@gmail.com>
 SPDX-License-Identifier: MIT
 -->
 
-# Reproducing the 32-bit armhf Virtual Memory Exhaustion Bug on AMD64
+# Bug reproduction of the Whisper.cpp armhf build virtual memory exhaustion problem
 
 This document describes how to reproduce the `virtual memory exhausted: Cannot allocate memory` compiler crash encountered when building `whisper.cpp` with the Vulkan backend (`-DGGML_VULKAN=ON`) on 32-bit ARM (`armhf`), using QEMU user-mode emulation on an AMD64 (x86_64) host.
 
