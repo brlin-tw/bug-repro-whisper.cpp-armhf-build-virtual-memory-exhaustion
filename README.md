@@ -7,8 +7,6 @@ SPDX-License-Identifier: MIT
 
 This document describes how to reproduce the `virtual memory exhausted: Cannot allocate memory` compiler crash encountered when building `whisper.cpp` with the Vulkan backend (`-DGGML_VULKAN=ON`) on 32-bit ARM (`armhf`), using QEMU user-mode emulation on an AMD64 (x86_64) host.
 
----
-
 ## 1. Problem Description & Root Cause
 
 When building `whisper.cpp` with `-DGGML_VULKAN=ON` on 32-bit architectures such as `armhf`, the compilation of `ggml-vulkan` fails with:
@@ -35,8 +33,6 @@ When GCC (`cc1plus`) parses an initializer list of numbers (`{ 0x..., 0x... }`),
 
 Because 32-bit Linux architectures enforce a **hard 3 GiB user-space process virtual address space limit** (`CONFIG_VMSPLIT_3G`), `g++` runs out of virtual address space and terminates with `virtual memory exhausted: Cannot allocate memory` during the AST parsing phase, before optimization or code generation can even begin.
 
----
-
 ## 2. Prerequisites on AMD64 Host
 
 Install QEMU user-mode emulation and Docker (or Podman) on the AMD64 host:
@@ -54,8 +50,6 @@ Verify that ARMv7 (`armhf`) user-space emulation is active:
 docker run --rm --platform linux/arm/v7 -v "${PWD}:/pwd" ubuntu:24.04 uname -m
 # Expected output: armv7l
 ```
-
----
 
 ## 3. Step-by-Step Reproduction Instructions
 
@@ -115,8 +109,6 @@ When `g++` compiles `mul_mm.comp.cpp.o`, virtual memory is exhausted:
 virtual memory exhausted: Cannot allocate memory
 make[2]: *** [ggml/src/ggml-vulkan/CMakeFiles/ggml-vulkan.dir/build.make:...: ggml/src/ggml-vulkan/CMakeFiles/ggml-vulkan.dir/mul_mm.comp.cpp.o] Error 1
 ```
-
----
 
 ## 4. Verifying the Fix
 
