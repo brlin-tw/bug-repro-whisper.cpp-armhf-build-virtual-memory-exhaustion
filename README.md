@@ -99,7 +99,7 @@ Tagged release `v1.9.4` requires upstream commit `69fcec3bf11e54825edda9ea2c11e3
 git -c user.email="dummy@example.com" -c user.name="Dummy User" cherry-pick 69fcec3bf11e54825edda9ea2c11e33f5cb9652c
 ```
 
-### Step 5: Configure and trigger the build (without patch 0002)
+### Step 5: Configure and trigger the build
 
 ```bash
 cmake -B build -DGGML_VULKAN=ON
