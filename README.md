@@ -9,6 +9,10 @@ This document describes how to reproduce the `virtual memory exhausted: Cannot a
 
 <https://gitlab.com/brlin/bug-repro-whisper.cpp-armhf-build-virtual-memory-exhaustion>
 
+## Disclaimer
+
+The content of this repository is mostly AI generated.  While I did review and curate some of the content, it may contain inaccuracies.
+
 ## 1. Problem Description & Root Cause
 
 When building `whisper.cpp` with `-DGGML_VULKAN=ON` on 32-bit architectures such as `armhf`, the compilation of `ggml-vulkan` fails with:
