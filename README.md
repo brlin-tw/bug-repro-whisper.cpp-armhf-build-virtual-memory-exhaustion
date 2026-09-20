@@ -7,6 +7,8 @@ SPDX-License-Identifier: MIT
 
 This document describes how to reproduce the `virtual memory exhausted: Cannot allocate memory` compiler crash encountered when building `whisper.cpp` with the Vulkan backend (`-DGGML_VULKAN=ON`) on 32-bit ARM (`armhf`), using QEMU user-mode emulation on an AMD64 (x86_64) host.
 
+<https://gitlab.com/brlin/bug-repro-whisper.cpp-armhf-build-virtual-memory-exhaustion>
+
 ## 1. Problem Description & Root Cause
 
 When building `whisper.cpp` with `-DGGML_VULKAN=ON` on 32-bit architectures such as `armhf`, the compilation of `ggml-vulkan` fails with:
