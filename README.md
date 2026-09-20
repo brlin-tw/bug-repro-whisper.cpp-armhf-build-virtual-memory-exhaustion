@@ -73,6 +73,7 @@ docker run --rm -it \
 ### Step 2: Install build dependencies inside the container
 
 ```bash
+export DEBIAN_FRONTEND=noninteractive
 apt update && apt install -y \
     build-essential \
     cmake \
