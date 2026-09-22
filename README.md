@@ -141,3 +141,11 @@ cmake --build build --target ggml-vulkan
 
 * `mul_mm.comp.cpp.o` compiles in **under 2 seconds** using only **~530 MiB** peak RSS (down from >3.5 GiB crash).
 * `libggml-vulkan.so` links and completes with 100% success.
+
+## Upstream resolution: Revision `3a54d53e7c93a016de47d093e5a7dae6c9658962`
+
+Upstream commit [`3a54d53e7c93a016de47d093e5a7dae6c9658962`](https://github.com/ggml-org/whisper.cpp/commit/3a54d53e7c93a016de47d093e5a7dae6c9658962) (*"vulkan: use spec constant for matrix matrix multiplication A-type (llama/25773)"*) addresses this issue via an architectural simplification:
+
+* **Shader unification via specialization constants**: Instead of generating separate SPIR-V bytecode arrays for every individual quantization format (`q1_0`, `q2_0`, `q4_0`, `q4_1`, `q5_0`, `q5_1`, `q8_0`, `q2_k`, etc.) in `matmul_shaders()`, the matrix multiplication compute shader (`mul_mm.comp`) was refactored with `#ifdef MULMAT_QUANT` to accept the quantization type as a Vulkan specialization constant (`constant_id = 12, MmTypeA`).
+* **Massive reduction in generated code volume**: This collapses hundreds of standalone quantized shader variants into unified `matmul_quant_f16` and `matmul_quant_f32` shaders. Consequently, `vulkan-shaders-gen` generates substantially fewer bytecode arrays and numeric literals in `mul_mm.comp.cpp`, bringing AST memory allocation in GCC (`cc1plus`) well under the 3 GiB user-space limit on 32-bit `armhf`.
+
